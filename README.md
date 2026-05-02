@@ -14,7 +14,8 @@ A API redireciona mensagens recebidas por meio de uma fila **RabbitMQ** para o e
 - **PostgreSQL** – Persistência dos dados dos usuários.
 - **Lombok** – Uso da anotação `@Slf4j` para geração de logs.
 - **Spring Boot Actuator** – Monitoramento da aplicação.
-
+- **Docker** – criação, implantação e gerenciamento de aplicações dentro de contêineres.
+- **JUnit 5 + Mockito** – Testes Unitarios
 
 ## Requisitos
 
@@ -36,10 +37,24 @@ git  https://github.com/bispobr/Spring-java-microservice-email.git
 git https://github.com/bispobr/Spring-java-microservice-usuario.git
 ```
 
-3. Altere o arquivo de configuração **application.properties** com as credenciais de login do PostgreSQL do seu ambiente, juntamente com suas credenciais de email.
+3. Altere o arquivo de configuração **application.properties** com as credenciais de login do PostgreSQL do seu ambiente, adicione as configs rabitmq juntamente com suas credenciais de email.
 
 ## Como usar
 
 1. Inicie a aplicação 
 2. API está acessivel atraves do endereço http://localhost:8082
 3. O endpoint de saúde e métricas do Actuator está acessível através do Link http://localhost:8082/actuator
+
+## Como Rodar em um Container (Opcional)
+
+1. Construa o projeto:
+
+```bash
+mvn clean package 
+```
+
+2. Gere a Imagem Docker. Com o Docker  instalado execute:
+
+```bash
+docker-compose up --build
+```
