@@ -1,60 +1,115 @@
-# Microserviço de Cadastro de Usuário - Java Spring
+# Email Service
 
-Este repositório contém a segunda parte de um projeto de microserviços desenvolvido com **Java Spring**, com foco, na prática de comunicação assíncrona entre serviços e uso de boas práticas de observabilidade.
+Microsserviço responsável pelo processamento e envio de e-mails a partir de mensagens recebidas através do RabbitMQ.
 
-## Descrição
+O serviço faz parte de um conjunto de microsserviços desenvolvido com Java e Spring Boot.
 
-A API redireciona mensagens recebidas por meio de uma fila **RabbitMQ** para o e-mail especificado.
+## Arquitetura
 
+Fluxo simplificado:
 
-## Tecnologias  Utilizadas
+```text
+User Service
+      │
+      ▼
+  RabbitMQ
+      │
+      ▼
+ Email Service
+      │
+      ▼
+Servidor SMTP
+```
 
-- **Java + Spring Boot** – Framework principal da aplicação
-- **RabbitMQ** com **CloudAMQP** – Comunicação assíncrona entre serviços.
-- **PostgreSQL** – Persistência dos dados dos usuários.
-- **Lombok** – Uso da anotação `@Slf4j` para geração de logs.
-- **Spring Boot Actuator** – Monitoramento da aplicação.
-- **Docker** – criação, implantação e gerenciamento de aplicações dentro de contêineres.
-- **JUnit 5 + Mockito** – Testes Unitarios
+O serviço consome mensagens recebidas através do RabbitMQ e utiliza as informações da mensagem para realizar o envio do e-mail.
+
+## Responsabilidades
+
+- Consumir mensagens do RabbitMQ
+- Processar informações de e-mail
+- Realizar o envio das mensagens
+- Disponibilizar informações de saúde e métricas da aplicação
+
+## Tecnologias
+
+- Java 21
+- Spring Boot
+- Spring AMQP
+- RabbitMQ / CloudAMQP
+- Spring Mail
+- PostgreSQL
+- Spring Boot Actuator
+- Docker
+- JUnit 5
+- Mockito
 
 ## Requisitos
 
-- Java 21+
+- Java 21
 - Maven
-- PostgreSQL
+- RabbitMQ ou CloudAMQP
+- Servidor SMTP
 
+## Configuração
 
-## Executando o Projeto
+As configurações de RabbitMQ e SMTP devem ser fornecidas pelo ambiente.
 
-1. Clone o repositório 1:
+Exemplo:
 
-```bash
-git  https://github.com/bispobr/Spring-java-microservice-email.git
-```
-2. Clone o repositório 2:
-
-```bash
-git https://github.com/bispobr/Spring-java-microservice-usuario.git
-```
-
-3. Altere o arquivo de configuração **application.properties** com as credenciais de login do PostgreSQL do seu ambiente, adicione as configs rabitmq juntamente com suas credenciais de email.
-
-## Como usar
-
-1. Inicie a aplicação 
-2. API está acessivel atraves do endereço http://localhost:8082
-3. O endpoint de saúde e métricas do Actuator está acessível através do Link http://localhost:8082/actuator
-
-## Como Rodar em um Container (Opcional)
-
-1. Construa o projeto:
-
-```bash
-mvn clean package 
+```properties
+RABBITMQ_ADDRESSES=amqps://...
+RABBITMQ_EMAIL_QUEUE=...
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=...
+MAIL_PASSWORD=...
 ```
 
-2. Gere a Imagem Docker. Com o Docker  instalado execute:
+Não versione credenciais reais no repositório.
+
+## Executando
+
+Clone o repositório:
 
 ```bash
-docker-compose up --build
+git clone https://github.com/bispobr/Spring-java-microservice-email.git
+cd Spring-java-microservice-email
 ```
+
+Execute:
+
+```bash
+./mvnw spring-boot:run
+```
+
+A aplicação utiliza a porta `8082`.
+
+## Actuator
+
+O Spring Boot Actuator disponibiliza informações de saúde e métricas da aplicação.
+
+Endpoint:
+
+```text
+http://localhost:8082/actuator
+```
+
+## Docker
+
+O projeto possui configuração relacionada a Docker documentada no repositório. A execução deve ser feita de acordo com os arquivos de infraestrutura presentes na versão atual do projeto.
+
+## Testes
+
+```bash
+./mvnw test
+```
+
+## Serviços relacionados
+
+- [User Service](https://github.com/bispobr/Spring-java-microservice-usuario)
+- [Order Service](https://github.com/bispobr/Spring-java-microservice-pedido)
+- [Processing Service](https://github.com/bispobr/Spring-java-microservice-processamento)
+
+## Status
+
+Projeto de estudo desenvolvido para praticar mensageria assíncrona, integração com SMTP e processamento de mensagens utilizando Java e Spring Boot.
