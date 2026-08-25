@@ -76,9 +76,10 @@ git clone https://github.com/bispobr/Spring-java-microservice-email.git
 cd Spring-java-microservice-email
 ```
 
-Execute:
+Compile e execute:
 
 ```bash
+./mvnw clean package
 ./mvnw spring-boot:run
 ```
 
@@ -88,10 +89,10 @@ A aplicação utiliza a porta `8082`.
 
 O Spring Boot Actuator disponibiliza informações de saúde e métricas da aplicação.
 
-Endpoint:
+Endpoint de saúde:
 
 ```text
-http://localhost:8082/actuator
+http://localhost:8082/actuator/health
 ```
 
 ## Docker
@@ -99,6 +100,8 @@ http://localhost:8082/actuator
 O projeto possui configuração relacionada a Docker documentada no repositório. A execução deve ser feita de acordo com os arquivos de infraestrutura presentes na versão atual do projeto.
 
 ## Testes
+
+Execute:
 
 ```bash
 ./mvnw test
