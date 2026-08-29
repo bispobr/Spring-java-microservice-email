@@ -47,25 +47,28 @@ O serviço consome mensagens recebidas através do RabbitMQ e utiliza as informa
 
 - Java 21
 - Maven
+- PostgreSQL
 - RabbitMQ ou CloudAMQP
 - Servidor SMTP
 
 ## Configuração
 
-As configurações de RabbitMQ e SMTP devem ser fornecidas pelo ambiente.
+As configurações de banco de dados, RabbitMQ e SMTP podem ser fornecidas por variáveis de ambiente.
 
-Exemplo:
+| Variável | Descrição | Exemplo / padrão |
+|---|---|---|
+| `DB_URL` | URL de conexão com o PostgreSQL | `jdbc:postgresql://localhost:5432/microservice-email` |
+| `DB_USERNAME` | Usuário do PostgreSQL | `postgres` |
+| `DB_PASSWORD` | Senha do PostgreSQL | `admin` |
+| `JPA_DDL_AUTO` | Estratégia de atualização do schema | `update` |
+| `RABBITMQ_ADDRESSES` | Endereço do RabbitMQ ou CloudAMQP | `amqps://...` |
+| `RABBITMQ_EMAIL_QUEUE` | Nome da fila de e-mails | `...` |
+| `MAIL_HOST` | Servidor SMTP | `smtp.gmail.com` |
+| `MAIL_PORT` | Porta do servidor SMTP | `587` |
+| `MAIL_USERNAME` | Usuário utilizado no SMTP | definido pelo ambiente |
+| `MAIL_PASSWORD` | Senha utilizada no SMTP | definida pelo ambiente |
 
-```properties
-RABBITMQ_ADDRESSES=amqps://...
-RABBITMQ_EMAIL_QUEUE=...
-MAIL_HOST=smtp.gmail.com
-MAIL_PORT=587
-MAIL_USERNAME=...
-MAIL_PASSWORD=...
-```
-
-Não versione credenciais reais no repositório.
+A configuração SMTP utiliza autenticação e STARTTLS.
 
 ## Executando
 
@@ -93,6 +96,12 @@ Endpoint de saúde:
 
 ```text
 http://localhost:8082/actuator/health
+```
+
+Endpoint de métricas:
+
+```text
+http://localhost:8082/actuator/metrics
 ```
 
 ## Docker
