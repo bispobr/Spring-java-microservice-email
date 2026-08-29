@@ -106,8 +106,17 @@ http://localhost:8082/actuator/metrics
 
 ## Docker
 
-O projeto possui configuração relacionada a Docker documentada no repositório. A execução deve ser feita de acordo com os arquivos de infraestrutura presentes na versão atual do projeto.
+1. Construa o projeto:
 
+```bash
+mvn clean package 
+```
+
+2. Gere a Imagem Docker. Com o Docker  instalado execute:
+
+```bash
+docker-compose up --build
+```
 ## Testes
 
 Execute:
@@ -116,11 +125,9 @@ Execute:
 ./mvnw test
 ```
 
-## Serviços relacionados
+## Serviço relacionado
 
 - [User Service](https://github.com/bispobr/Spring-java-microservice-usuario)
-- [Order Service](https://github.com/bispobr/Spring-java-microservice-pedido)
-- [Processing Service](https://github.com/bispobr/Spring-java-microservice-processamento)
 
 ## Status
 
